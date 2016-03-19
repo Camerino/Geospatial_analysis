@@ -1,0 +1,15 @@
+import urllib
+import os
+
+def get_epsg_code(epsg):
+    f = urllib.urlopen("http://spatialreference.org/ref/epsg/{0}/esriwkt/".format(epsg))
+    return (f.read())
+
+shp_filename = "../geodata/UTM_Zone_Boundaries"
+
+with open("../geodata/{0}.prj".format(shp_filename), 'w') as prj:
+    epsg_code = get_epsg_code(4326)
+
+    prj.write(epsg_code)
+
+    print "done writing projection definition to EPSG: " + epsg_code
